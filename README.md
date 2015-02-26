@@ -8,8 +8,10 @@ contain the code for this project, but also will contain all the documents we ha
 
 ## Set up Instructons
 You need PHP, Apache Server, and Composer.
+
 Look at the Slim documentation on how to use Composer to install requirements.
 
 ## Running the server
 Use the following command: php -S localhost:3000
+
 Navigate to the appropriate URL
