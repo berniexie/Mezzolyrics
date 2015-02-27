@@ -4,4 +4,7 @@
 
 require_once __DIR__ . '/composer' . '/autoload_real.php';
 
-return ComposerAutoloaderInit2885bec0be8e1153e78521b3eec63d94::getLoader();
+require_once __DIR__ . '/bshaffer/php-echonest-api/lib/EchoNest/Autoloader.php';
+EchoNest_Autoloader::register();
+
+return ComposerAutoloaderInite25f9139888283d4fb4c8dc070ea61e9::getLoader();

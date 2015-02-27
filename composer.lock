@@ -4,8 +4,18 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b3afe5a5b09b88c239e4192600281409",
+    "hash": "c86b56a07e4b5c28943c515443cb0b25",
     "packages": [
+        {
+            "name": "bshaffer/php-echonest-api",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bshaffer/php-echonest-api.git",
+                "reference": "origin/master"
+            },
+            "type": "library"
+        },
         {
             "name": "slim/slim",
             "version": "2.5.0",
@@ -58,7 +68,6 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
