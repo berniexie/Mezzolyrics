@@ -36,7 +36,7 @@
     <div class="footer">
         <div id = "buttons">
             <FORM>
-                <INPUT Type="BUTTON" class="buttons" VALUE="Back" ONCLICK="window.location.href='http://localhost:3000'">
+                <INPUT Type="BUTTON" VALUE="Back" ONCLICK="window.location.href='http://localhost:3000'">
             </FORM>
         </div>
     </div>

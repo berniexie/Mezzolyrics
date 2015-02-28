@@ -18,10 +18,10 @@
     <div class="footer">
       <div id = "buttons">
         <FORM>
-          <INPUT Type="BUTTON" class="buttons" VALUE="Song Selection" ONCLICK="window.location.href='http://localhost:3000/songs'">
+          <INPUT Type="BUTTON" VALUE="Song Selection" ONCLICK="window.location.href='http://localhost:3000/songs'">
         </FORM>
         <FORM>
-          <INPUT Type="BUTTON" class="buttons" VALUE="Word Cloud" ONCLICK="window.location.href='http://localhost:3000/'">
+          <INPUT Type="BUTTON" VALUE="Word Cloud" ONCLICK="window.location.href='http://localhost:3000/'">
         </FORM>
       </div>
     </div>

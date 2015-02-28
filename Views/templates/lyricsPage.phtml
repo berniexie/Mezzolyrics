@@ -16,13 +16,13 @@
     </div>
 
     <div class="footer">
-      <div id = "buttons">
-        <FORM>
-          <INPUT Type="BUTTON" class="buttons" VALUE="Song Selection" ONCLICK="window.location.href='http://localhost:3000/songs'">
-        </FORM>
-        <FORM>
-          <INPUT Type="BUTTON" class="buttons" VALUE="Word Cloud" ONCLICK="window.location.href='http://localhost:3000/'">
-        </FORM>
+      <div>
+        <form method='get' action='/songs'>
+          <input type="submit" class="buttons" value="Song Selection">
+        </form>
+        <form method='get' action='/cloud'>
+          <input type="submit" class="buttons" VALUE="Word Cloud">
+        </form>
       </div>
     </div>
 
