@@ -1,46 +1,57 @@
 <?php
 require "vendor/autoload.php";
 
+require_once './vendor/Twig/Autoloader.php';
+Twig_Autoloader::register();
+$loader = new Twig_Loader_Filesystem('./templates');
+$twig = new Twig_Environment($loader, array(
+    // 'cache' => './tmp/cache',  # turned off for development purposes
+));
 
 $app = new \Slim\Slim();
-$app->get('/hello/:name', function ($name) {
-    echo "Hello, $name";
+
+$app->get('/', function () use ($app, $twig) {
+	$template = $twig->loadTemplate('wordCloudPage.php');
+	$params = array('title' => 'Mezzolyrics');
+	$template->display($params);
 });
 
-$app->get('/mezzolyrics', function() use ($app) {
-	$template = <<<EOT
-<!DOCTYPE html>
-    <html>
-    <head>
-    <link rel="stylesheet" type="text/css" href="mystyles.css">
-    </head>
+$app->get('/songs', function () use ($app, $twig) {
+	$template = $twig->loadTemplate('songListPage.php');
+	$params = array(
+		'title' => 'Mezzolyrics', 
+		'searchword' => 'Word X',
+		'songs' => array(
+			array(
+				'title' => 'Song 1',
+				'frequency' => '4'
+			),
+			array(
+				'title' => 'Song 2',
+				'frequency' => '3'
+			),
+			array(
+				'title' => 'Song 3',
+				'frequency' => '2'
+			),
+			array(
+				'title' => 'Song 4',
+				'frequency' => '1'
+			)
+		)
+	);
+	$template->display($params);
+});
 
-  	<body bgcolor="#660099">
-
-	<div id="header">
-	<h1>Mezzolyrics</h1>
-	</div>
-
-	<div id="canvas">
-	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2009/12/9/1260365203581/Wordle-of-Alistair-Darili-002.jpg" alt="Mountain View" style="width:800px;height:600px">
-	</div>
-	<div id="empty"></div>
-
-	<div id="wrapper">
-    <form id="search"><br>
-	<input type="text" name="firstname" placeholder="enter an artist">
-	<br></form>
-    <button id="second">Search!</button>
-	</div>
-
-	<div id="footer">
-	Copyright Mezzolyrics
-	</div>
-
-	</body> 
-   	</html>
-EOT;
-    echo $template;
+$app->get('/lyrics', function () use ($app, $twig) {
+	$lyrics = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper malesuada sem, nec ornare libero fermentum scelerisque. Nulla sed elit malesuada, condimentum nunc ac, vehicula libero. Suspendisse sit amet tellus laoreet, laoreet felis sit amet, iaculis orci. Suspendisse in viverra tellus, quis venenatis nisl. Nullam in ligula arcu. Nunc commodo, ante eget tempor dapibus, diam dui porta nisl, id mollis libero lorem ut lacus. Quisque fringilla ante a semper porttitor. Donec a ornare ligula, nec luctus arcu. Sed in ex cursus, fringilla augue id, pretium sem. Suspendisse velit tellus, iaculis maximus libero ut, sodales feugiat tortor. Praesent laoreet, justo vel fermentum rutrum, lacus dolor dignissim est, mollis bibendum risus dui quis massa. Mauris sit amet ante bibendum, venenatis arcu a, viverra purus. Cras at purus ligula.';
+	$template = $twig->loadTemplate('lyricsPage.php');
+	$params = array(
+		'title' => 'Mezzolyrics',
+		'songtitle' => 'Song Y',
+		'artist' => 'Artist Z',
+		'lyrics' => $lyrics);
+	$template->display($params);
 });
 
 $app->run();
