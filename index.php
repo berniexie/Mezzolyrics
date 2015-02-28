@@ -7,11 +7,11 @@ $app = new \Slim\Slim();
 $app->get('/search_artist/', function() use ($app){
   $req = $app->request();
   $searched_artist = $req->get('firstname');
-  echo "$searched_artist";
+  $app->render('word_cloud_page.php', array("artist" => $searched_artist));
 });
 
 $app->get('/', function() use ($app) {
-  $app->render('word_cloud_page.php');
+  $app->render('word_cloud_page.php', array("artist" => ""));
 });
 
 $app->get('/song_list', function() use ($app) {
