@@ -12,7 +12,7 @@ $app->get('/mezzolyrics', function() use ($app) {
 <!DOCTYPE html>
     <html>
     <head>
-    <link rel="stylesheet" type="text/css" href="mystyles.css">
+    <link rel="stylesheet" type="text/css" href="css/myStyles.css">
     </head>
 
   	<body bgcolor="#660099">

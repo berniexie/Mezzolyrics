@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="pageStyles.css">
+        <link rel="stylesheet" type="text/css" href="css/pageStyles.css">
     </head>
 
 <body bgcolor="#A4A4A4"> <!--gray background -->
