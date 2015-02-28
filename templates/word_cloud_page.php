@@ -18,8 +18,12 @@
     <div id="empty"></div>
 
     <div id="artistSearch">
-        <form id="search"><br>
+        <form id="search" method='get' action='/search_artist'>
+            <br>
             <input type="text" name="firstname" placeholder="Enter an artist">
+            <input type="submit" value = "Submit">
+            <input type="submit" value="Add">
+            <input type="submit" value = "Share">
             <br>
         </form>
     </div>
