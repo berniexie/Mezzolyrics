@@ -45,8 +45,8 @@ $app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
 
 $app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
 	$template = $twig->loadTemplate('songListPage.phtml');
-	$wordObject = $cloudObject->getWordObject($word);
-	$songs = $wordObject->getSongTitles();
+	// $wordObject = $cloudObject->getWordObject($word);
+	// $songs = $wordObject->getSongTitles();
 	$params = array(
 		'title' => 'Mezzolyrics', 
 		'searchword' => $word,
@@ -55,8 +55,8 @@ $app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
 	$template->display($params);
 });
 
-$app->get('/lyrics/:song', function ($song) use ($app, $twig) {
-	$lyrics = "STUFFFFFFFFF";
+$app->get('/lyrics/:song/:word', function ($song, $word) use ($app, $twig) {
+	$lyrics = $word;
 	// FILLL THIS IN
 	// $lyrics = $cloudObject->getWordObject
 	$template = $twig->loadTemplate('lyricsPage.phtml');
