@@ -8,7 +8,7 @@ class DataManager
 {
 	private $artists = array();	//array of artists used to generate the cloud
 	private $words = array();	//array of Word objects
-        private $songs = array();
+       private $songs = array();
         private $cloud;
         private $apiManager;
 
@@ -20,27 +20,29 @@ class DataManager
         public function addArtist($artistName){
           $this->artists[] = artistName;   
           //Use the APIManager to fill in songs with Song Objs from the artist
+          $songs = $this->apiManager->getArtistSongs($artistName);
         }
          
         public function getWords(){
-          foreach($songs as $song){
-            unset($song); //this pops the item from the array
-            //$lyrics = $song.getParsedLyrics(); //this gets the individual lyrics
+          foreach($songs as $song){            
+            $lyrics = $song.getParsedLyrics(); //this gets the individual lyrics
+                                               // Why was this commented out?
             foreach($lyrics as $lyric){
               $bool = false;
               foreach($words as $word){
                 //if it does, call the found() function in the word
                 if($lyric == $word->getContent()){
-                  $word.found();
+                  $word->found();
                   $bool = true; 
                 }
               }
-              if($bool == false {
+              if($bool == false) {
                 //If not, initialize it to a word object and add it to the array
                 $word = new Word($lyric, $song);
                 $words[] = $word;
               }
             }
+            unset($song); //this pops the item from the array
           }
         }
 

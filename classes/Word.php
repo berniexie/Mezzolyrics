@@ -40,20 +40,22 @@ class Word
     return $songList;
   }
 
-  public function incrementFrequency()
-  {
-    ++$frequency;
-  }
-
   public function found($song)
   {
-    if(array_key_exists($song, $this->map))
+    ++frequency;
+
+    if(array_key_exists($song->getTitle(), $this->map))
     {
-      ++$this->map[$song];
+      $this->map[$song->getTitle()].frequencyInSong++;
     }
     else
     {
-      $this->map[$song] = 1;
+      //$this->map[$song] = 1;
+
+      $this->map[$song->getTitle()] = array(
+        'songObject' => $song;
+        'frequencyInSong' => 1;
+      );
     }
   }
 }
