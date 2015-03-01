@@ -19,22 +19,22 @@ class Song
 
 	public function getFrequency($word)
 	{
-		return lyricMap[$word];
+		return $this->lyricMap[$word];
 	}
 
 	public function getArtist()
 	{
-		return artist;
+		return $this->artist;
 	}
 
 	public function getSongTitle()
 	{
-		return songTitle;
+		return $this->songTitle;
 	}
 
 	public function getLyrics()
 	{
-		return lyrics;
+		return $this->lyrics;
 	}
 }
 
