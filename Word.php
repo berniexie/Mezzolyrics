@@ -12,7 +12,11 @@ class Word
   {
     $this->content = $content;
     $this->frequency = 1;
-    $this->map[$song] = 1;
+    //$this->map[$song] = 1;
+    $this->map[$song->getTitle()] = array(
+      'songObject' => $song,
+      'frequencyInSong' => 1
+      );
   }
   
   public function getContent()
@@ -57,7 +61,7 @@ class Word
       $this->map[$song->getTitle()] = array(
         'songObject' => $song,
         'frequencyInSong' => 1
-      );
+        );
     }
   }
 }
