@@ -10,8 +10,8 @@ class Cloud
    		$this->artists = artists;
    		$this->lyricCloud = lyricCloud;
    	}
+       
         /*
-
         public function addNewWords($newArtist, $newWords){
                 $artists[] = $newArtist;
                 for($i = 0; $i < count($newWords); $i++){
