@@ -2,24 +2,22 @@
 
 class Song
 {
-	private $songTitle;	// string
-	private $artist;	// string
-	private $lyrics;	// string
-	private $songID;	// string
-	private $lyricMap = array();	// array (string) word => (int) frequency
+	private $title;				// string
+	private $artist;			// string
+	private $originalLyrics;	// string
+	private $parsedLyrics;		// string
 
-   	public function __construct($songTitle, $artist, $lyrics, $songID, $lyricMap)
+   	public function __construct($title, $artist, $originalLyrics, $parsedLyrics)
    	{
-   		$this->songTitle = $songTitle;
+   		$this->title = $title;
    		$this->artist = $artist;
-   		$this->lyrics = $lyrics;
-   		$this->songID = $songID;
-   		$this->lyricMap = $lyricMap;
+   		$this->originalLyrics = $originalLyrics;
+   		$this->parsedLyrics = $parsedLyrics;
    	}
 
-	public function getFrequency($word)
+	public function getTitle($word)
 	{
-		return $this->lyricMap[$word];
+		return $this->title;
 	}
 
 	public function getArtist()
@@ -27,14 +25,14 @@ class Song
 		return $this->artist;
 	}
 
-	public function getSongTitle()
+	public function getOriginalLyrics()
 	{
-		return $this->songTitle;
+		return $this->originalLyrics;
 	}
 
-	public function getLyrics()
+	public function getParsedLyrics()
 	{
-		return $this->lyrics;
+		return $this->parsedLyrics;
 	}
 }
 
