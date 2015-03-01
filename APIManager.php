@@ -14,12 +14,23 @@ class APIManager
     // returns array of strings - artist names
     public function getArtistSuggestion($userInput)
     {
+        $response = Echonest::query('artist', 'suggest', array(
+                                    'name'=> $userInput,
+                                    'results'=> 10));
+        $response = json_decode(json_encode($response), true);
+        $response = $response['response'];
+        $artists = array();
+        foreach ($response['artists'] as $artist)
+        {
+            array_push($artists, $artist['name']);
+        }
+        return $artists;
     }
 
     // returns string - url of artist image
     public function getArtistPicture($artistName)
     {
-
+        
     }
 
     // returns array mapping song title to song id
