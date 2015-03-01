@@ -15,6 +15,9 @@ class Word
 	{
 		return $songs;
 	}
+        public function getString(){
+                return $word;
+        }
 }
 
 ?>
