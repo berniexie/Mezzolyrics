@@ -1,10 +1,19 @@
 <?php
 require "vendor/autoload.php";
+require "APIManager.php";
 
 
 $app = new \Slim\Slim();
 $app->get('/hello/:name', function ($name) {
     echo "Hello, $name";
+});
+
+$app->get('/test/api', function () {
+    $manager = new APIManager();
+    $manager->getArtistSuggestion('nir');
+    //$manager->getArtistPicture("Daft Punk");
+    print_r($manager->getArtistSongs("Imagine Dragons"));
+    //$manager->getSongLyrics("SOEOHDA13F6B2B5A90");
 });
 
 $app->get('/mezzolyrics', function() use ($app) {
