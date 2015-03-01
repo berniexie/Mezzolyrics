@@ -7,7 +7,9 @@ Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
 class APIManager
 {
 
+
     private $spotify_api;
+    
 
     public function __construct()
     {
@@ -47,11 +49,8 @@ class APIManager
                                     'results'=> 100,
                                     'rank_type' => 'familiarity',
                                     'song_type' => 'studio',
-                                    'sort' => 'song_hotttnesss-desc');
+                                    'sort' => 'song_hotttnesss-desc'));
         $response = json_decode(json_encode($response), true)['response'];
-        print "<pre>";
-        print_r($response);
-        print "</pre>";
         $songs = array();
         foreach($response['songs'] as $song)
         {
@@ -66,6 +65,32 @@ class APIManager
     // returns string containing lyrics
     public function getSongLyrics($id)
     {
+        $response = Echonest\Service\Echonest::query('song', 'profile', array(
+                                    'id' => $id));
+        $response = json_decode(json_encode($response), true)['response'];
+        $title = $response['songs'][0]['title'];
+        $artist = $response['songs'][0]['artist_name'];
+        // print "<pre>";
+        // print_r($response);
+        // print "</pre>";
+        $artist = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $artist));
+        $title = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $title));
+        $html = file_get_contents('http://www.azlyrics.com/lyrics/' . $artist . '/' . $title . '.html');
+        //print $html[strpos($html, "<!-- start of lyrics -->") + $initial_offset + 1];
+        $html =  substr($html, strpos($html, "start of lyrics"), strpos($html, "end of lyrics") - strpos($html, "start of lyrics"));
+        $html = str_replace('<!--', '', $html);
+        $html = str_replace('start of lyrics -->', '', $html);
+        $display_lyrics = $html;
+        $html = str_replace('<i>', '', $html);
+        $html = str_replace('</i>', '', $html);
+        $html = preg_replace('#\s*\[.+\]\s*#U', ' ', $html);
+        $html = str_replace('<!--', '', $html);
+        $html = str_replace('<br />', ' ', $html);
+
+        $html = strtolower(preg_replace("/[^A-Za-z0-9 ]/", '', $html));
+        $simple_lyrics = $html;
+
+        print $html;
 
     }
 
