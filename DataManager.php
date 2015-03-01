@@ -25,7 +25,7 @@ class DataManager
          
         public function getWords(){
           foreach($this->songs as $song){            
-            $lyrics = $song.getParsedLyrics(); //this gets the individual lyrics
+            $lyrics = $song->getParsedLyrics(); //this gets the individual lyrics
                                                // Why was this commented out?
             foreach($lyrics as $lyric){
               $bool = false;
