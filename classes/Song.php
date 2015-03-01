@@ -15,7 +15,7 @@ class Song
    		$this->parsedLyrics = $parsedLyrics;
    	}
 
-	public function getTitle($word)
+	public function getTitle()
 	{
 		return $this->title;
 	}

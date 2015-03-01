@@ -1,5 +1,7 @@
 <?php
-require "./vendor/autoload.php";
+
+require "vendor/autoload.php";
+require "APIManager.php";
 
 include_once('Cloud.php');
 $cloud = new Cloud();
