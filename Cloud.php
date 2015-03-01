@@ -1,6 +1,6 @@
 <?php
 
-class Cloud 
+class Cloud
 {
 	private $artists = array();	//array of artists used to generate the cloud
 	private $wordObjectArray = array();	//array of Word items used in the lyric cloud

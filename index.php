@@ -2,9 +2,8 @@
 
 require "vendor/autoload.php";
 
-include_once('/classes/Cloud.php');
-include_once('/classes/DataManager.php');
-
+include_once('Cloud.php');
+include_once('DataManager.php');
 require_once './vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('./Views/templates');
@@ -14,8 +13,13 @@ $twig = new Twig_Environment($loader, array(
 
 $app = new \Slim\Slim();
 
-$dataManager = new DataManager()
-$cloudObject = null;
+$dataManager = new DataManager();
+$cloudObject;
+
+$app->get('/test', function () use ($app) {
+	$api = new APIManager();
+	print_r($api->getArtistSongs("coldplay"));
+});
 
 $app->get('/', function () use ($app, $twig) {
 	$template = $twig->loadTemplate('homePage.phtml');
@@ -23,7 +27,7 @@ $app->get('/', function () use ($app, $twig) {
 	$template->display($params);
 });
 
-$app->get('/cloud', function () use ($app, $twig, $cloud) {
+$app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
 	$artist = $app->request()->params('artist');
 	$cloudObject = $dataManager->getCloud($artist);
 	$wordCloud = $cloudObject->getWordCloudVisual();
@@ -34,7 +38,7 @@ $app->get('/cloud', function () use ($app, $twig, $cloud) {
 	$template->display($params);
 });
 
-$app->get('/songs/:word', function ($word) use ($app, $twig) {
+$app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
 	$template = $twig->loadTemplate('songListPage.phtml');
 	$wordObject = $cloudObject->getWordObject($word);
 	$songs = $wordObject->getSongTitles();
@@ -47,8 +51,9 @@ $app->get('/songs/:word', function ($word) use ($app, $twig) {
 });
 
 $app->get('/lyrics/:song', function ($song) use ($app, $twig) {
-	$lyrics = 
-	$lyrics = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper malesuada sem, nec ornare libero fermentum scelerisque. Nulla sed elit malesuada, condimentum nunc ac, vehicula libero. Suspendisse sit amet tellus laoreet, laoreet felis sit amet, iaculis orci. Suspendisse in viverra tellus, quis venenatis nisl. Nullam in ligula arcu. Nunc commodo, ante eget tempor dapibus, diam dui porta nisl, id mollis libero lorem ut lacus. Quisque fringilla ante a semper porttitor. Donec a ornare ligula, nec luctus arcu. Sed in ex cursus, fringilla augue id, pretium sem. Suspendisse velit tellus, iaculis maximus libero ut, sodales feugiat tortor. Praesent laoreet, justo vel fermentum rutrum, lacus dolor dignissim est, mollis bibendum risus dui quis massa. Mauris sit amet ante bibendum, venenatis arcu a, viverra purus. Cras at purus ligula.';
+	$lyrics = "STUFFFFFFFFF";
+	// FILLL THIS IN
+	// $lyrics = $cloudObject->getWordObject
 	$template = $twig->loadTemplate('lyricsPage.phtml');
 	$params = array(
 		'title' => 'Mezzolyrics',

@@ -2,7 +2,7 @@
 
 //use Echonest\Service\Echonest;
 Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
-require __Dir__ . "/classes/Song.php";
+include_once('Song.php');
 
 
 class APIManager

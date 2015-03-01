@@ -1,16 +1,16 @@
 <?php
-include 'Cloud.php'
-include 'Song.php'
-include 'Word.php'
-include 'APIManager.php'
+include_once('Cloud.php');
+include_once('Song.php');
+include_once('Word.php');
+include_once('APIManager.php');
 
 class DataManager 
 {
 	private $artists = array();	//array of artists used to generate the cloud
 	private $words = array();	//array of Word objects
-       private $songs = array();
-        private $cloud;
-        private $apiManager;
+  private $songs = array();
+  private $cloud;
+  private $apiManager;
 
         public function __construct(){
           //the usefulness of this is debatable
@@ -18,18 +18,18 @@ class DataManager
         }
 
         public function addArtist($artistName){
-          $this->artists[] = artistName;   
+          $this->artists[] = $artistName;   
           //Use the APIManager to fill in songs with Song Objs from the artist
-          $songs = $this->apiManager->getArtistSongs($artistName);
+          $this->songs = $this->apiManager->getArtistSongs($artistName);
         }
          
         public function getWords(){
-          foreach($songs as $song){            
+          foreach($this->songs as $song){            
             $lyrics = $song.getParsedLyrics(); //this gets the individual lyrics
                                                // Why was this commented out?
             foreach($lyrics as $lyric){
               $bool = false;
-              foreach($words as $word){
+              foreach($this->words as $word){
                 //if it does, call the found() function in the word
                 if($lyric == $word->getContent()){
                   $word->found();
@@ -51,7 +51,7 @@ class DataManager
           $this->getWords();
           //only getting the first 250 elements 
           $cloudArray = new array_slice($this->words, 0, 250);
-          $this->cloud = new Cloud($artists, $cloudArray);
+          $this->cloud = new Cloud($this->artists, $cloudArray);
           return $this->cloud;
         }
 }

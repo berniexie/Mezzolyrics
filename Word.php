@@ -1,5 +1,7 @@
 <?php
 
+include_once('Song.php');
+
 class Word
 {
   private $content;       // string
@@ -30,9 +32,9 @@ class Word
 
   public function getSongTitles()
   {
-    $songList = array()
+    $songList = array();
     foreach ($this->map as $song => $freq) {
-      $songList[] = new array(
+      $songList[] = array(
         'title' => $song->getTitle(),
         'frequency' => $freq
       );
@@ -42,19 +44,19 @@ class Word
 
   public function found($song)
   {
-    ++frequency;
+    ++$frequency;
 
     if(array_key_exists($song->getTitle(), $this->map))
     {
-      $this->map[$song->getTitle()].frequencyInSong++;
+      $this->map[$song->getTitle()]->frequencyInSong++;
     }
     else
     {
       //$this->map[$song] = 1;
 
       $this->map[$song->getTitle()] = array(
-        'songObject' => $song;
-        'frequencyInSong' => 1;
+        'songObject' => $song,
+        'frequencyInSong' => 1
       );
     }
   }
