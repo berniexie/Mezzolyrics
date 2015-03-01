@@ -1,0 +1,16 @@
+{% extends "homePage.phtml" %}
+{% block wordcloud %}  
+<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2009/12/9/1260365203581/Wordle-of-Alistair-Darili-002.jpg" alt="Mountain View" style="width:800px;height:600px"> 
+{% endblock %}
+{% block search %}
+<form id="search" method='get' action='/cloud'>
+    <input type="text" name="firstname" placeholder="Enter an artist">
+    <input type="submit" class="buttons" value="Submit">
+</form>
+<!--  this is where add to cloud functionality will be added and fb link
+<form id="search" method='get' action='?????'>
+    <input type="text" name="firstname" placeholder="Enter an artist">
+    <input type="submit" VALUE="Add to Cloud">
+</form> -->
+{% endblock %}
+

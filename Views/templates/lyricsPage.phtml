@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="pageStyles.css">
+</head>
+
+<body bgcolor="#A4A4A4"> <!--gray background-->
+    <div class="wrapper">
+      <div id="lyricsHeader">
+         <h1>{{ songtitle }}</h1>
+         <h2>{{ artist }}</h2>
+      </div>
+
+      <div id = "lyrics">{{ lyrics }}</div>
+      <div class="push"></div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <form method='get' action='/songs'>
+          <input type="submit" class="buttons" value="Song Selection">
+        </form>
+        <form method='get' action='/cloud'>
+          <input type="submit" class="buttons" VALUE="Word Cloud">
+        </form>
+      </div>
+    </div>
+
+</body>
+</html>

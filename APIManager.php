@@ -2,6 +2,7 @@
 
 //use Echonest\Service\Echonest;
 Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
+require __Dir__ . "/classes/Song.php";
 
 
 class APIManager
@@ -60,7 +61,7 @@ class APIManager
         return $url;
     }
 
-    // returns array mapping song title to song id
+    // returns array of Song objects containing all the songs of a given artist
     public function getArtistSongs($artistName)
     {
         $response = Echonest\Service\Echonest::query('song', 'search', array(
@@ -75,9 +76,13 @@ class APIManager
         {
             $title = $song['title'];
             $id = $song['id'];
-            $songs[$title] = $id;
+            $lyrics = $this->getSongLyrics($id);
+            $artist = $song['artist_name'];
+            $s = new Song($title, $artist, $lyrics['display_lyrics'], $lyrics['lyrics_array']);
+            $songs[] = $s;
+            break;
+            
         }
-
         return $songs;
     }
 
@@ -87,15 +92,17 @@ class APIManager
         $response = Echonest\Service\Echonest::query('song', 'profile', array(
                                     'id' => $id));
         $response = json_decode(json_encode($response), true)['response'];
-        $title = $response['songs'][0]['title'];
-        $artist = $response['songs'][0]['artist_name'];
-        // print "<pre>";
-        // print_r($response);
-        // print "</pre>";
-        $artist = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $artist));
-        $title = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $title));
-        $html = file_get_contents('http://www.azlyrics.com/lyrics/' . $artist . '/' . $title . '.html');
-        //print $html[strpos($html, "<!-- start of lyrics -->") + $initial_offset + 1];
+        try
+        {
+            $title = $response['songs'][0]['title'];
+            $artist = $response['songs'][0]['artist_name'];
+            $artist_lower = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $artist));
+            $title_lower = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $title));
+            $html = file_get_contents('http://www.azlyrics.com/lyrics/' . $artist_lower . '/' . $title_lower . '.html');
+        } catch (Exception $e) {
+            return null;
+        }
+        
         $html =  substr($html, strpos($html, "start of lyrics"), strpos($html, "end of lyrics") - strpos($html, "start of lyrics"));
         $html = str_replace('<!--', '', $html);
         $html = str_replace('start of lyrics -->', '', $html);
@@ -111,10 +118,12 @@ class APIManager
         foreach ($this->stop_words as $word) {
             $simple_lyrics = str_replace(' ' . $word . ' ', ' ', $simple_lyrics);
         }
+
+        $lyrics_array = preg_split('/\s+/', $simple_lyrics);
         
 
-        print $simple_lyrics;
-
+        $song = new Song($title, $artist, $display_lyrics, $lyrics_array);
+        return compact('display_lyrics', 'lyrics_array');
     }
 
     // sharee word cloud to facebook
