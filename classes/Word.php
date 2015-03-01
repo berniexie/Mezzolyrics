@@ -2,30 +2,47 @@
 
 class Word
 {
-  private $word;  // string
-  private $songs; // array of Song objects
-  private $frequency; //frequency of that word in the wordCloud
+  private $content;       // string
+  private $frequency;     // int
+  private $map = array(); // Maps Song objects to int (frequency in that song)
   
-  public function __construct($word, $songs, $frequency)
+  public function __construct($content, $song)
   {
-    $this->word = $word;
-    $this->songs = $songs;
-    $this->frequency = $frequency;
+    $this->content = $content;
+    $this->frequency = 1;
+    $this->map[$song] = 1;
   }
   
-  public function getSongs()
+  public function getContent()
   {
-    return $this->songs;
-  }
-  
-  public function getString()
-  {
-    return $this->word;
+    return $this->content;
   }
 
   public function getFrequency()
   {
     return $this->frequency;
+  }
+
+  public function getMap()
+  {
+    return $this->map;
+  }
+
+  public function incrementFrequency()
+  {
+    ++$frequency;
+  }
+
+  public function found($song)
+  {
+    if(array_key_exists($song, $this->map))
+    {
+      ++$this->map[$song];
+    }
+    else
+    {
+      $this->map[$song] = 1;
+    }
   }
 }
 
