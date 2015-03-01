@@ -48,11 +48,11 @@ class Word
 
   public function found($song)
   {
-    ++$frequency;
+    ++$this->frequency;
 
     if(array_key_exists($song->getTitle(), $this->map))
     {
-      $this->map[$song->getTitle()]->frequencyInSong++;
+      $this->map[$song->getTitle()]['frequencyInSong']++;
     }
     else
     {
