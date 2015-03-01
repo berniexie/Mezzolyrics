@@ -42,7 +42,25 @@ class APIManager
     // returns array mapping song title to song id
     public function getArtistSongs($artistName)
     {
-        
+        $response = Echonest\Service\Echonest::query('song', 'search', array(
+                                    'artist'=> $artistName,
+                                    'results'=> 100,
+                                    'rank_type' => 'familiarity',
+                                    'song_type' => 'studio',
+                                    'sort' => 'song_hotttnesss-desc');
+        $response = json_decode(json_encode($response), true)['response'];
+        print "<pre>";
+        print_r($response);
+        print "</pre>";
+        $songs = array();
+        foreach($response['songs'] as $song)
+        {
+            $title = $song['title'];
+            $id = $song['id'];
+            $songs[$title] = $id;
+        }
+
+        return $songs;
     }
 
     // returns string containing lyrics
