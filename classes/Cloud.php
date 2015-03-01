@@ -7,8 +7,8 @@ class Cloud
 
    	public function __construct($artists, $lyricCloud)
    	{
-   		$this->artists = artists;
-   		$this->lyricCloud = lyricCloud;
+   		$this->artists = $artists;
+   		$this->lyricCloud = $lyricCloud;
    	}
        
         /*
@@ -28,8 +28,8 @@ class Cloud
         */
 
         public function getWordObject($word){
-                for($i = 0; $i < count($newWords); $i++){
-                    $wordObj = $lyricCloud[$i];
+                for($i = 0; $i < count($this->lyricCloud); $i++){
+                    $wordObj = $this->lyricCloud[$i];
                     if($wordObj->getString() == $word){
                       return $wordObj;
                     }
