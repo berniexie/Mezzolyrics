@@ -50,7 +50,7 @@ class DataManager
           $this->addArtist($artistName);
           $this->getWords();
           //only getting the first 250 elements 
-          $cloudArray = new array_slice($this->words, 0, 250);
+          $cloudArray = array_slice($this->words, 0, 250);
           $this->cloud = new Cloud($this->artists, $cloudArray);
           return $this->cloud;
         }

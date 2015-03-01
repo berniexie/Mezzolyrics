@@ -3,6 +3,8 @@
 //use Echonest\Service\Echonest;
 Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
 include_once('Song.php');
+require __DIR__ . '/vendor/musixmatch-php-lib/src/musixmatch.php';
+
 
 
 class APIManager
@@ -64,12 +66,17 @@ class APIManager
     // returns array of Song objects containing all the songs of a given artist
     public function getArtistSongs($artistName)
     {
+        try
+        {
         $response = Echonest\Service\Echonest::query('song', 'search', array(
                                     'artist'=> $artistName,
-                                    'results'=> 100,
+                                    'results'=> 50,
                                     'rank_type' => 'familiarity',
                                     'song_type' => 'studio',
                                     'sort' => 'song_hotttnesss-desc'));
+        } catch (Exception $e) {
+            
+        }
         $response = json_decode(json_encode($response), true)['response'];
         $songs = array();
         foreach($response['songs'] as $song)
