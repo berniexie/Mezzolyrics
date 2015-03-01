@@ -1,7 +1,13 @@
 <html>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="pageStyles.css">
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
+         <style>
+            a {
+                text-decoration: none;
+                color: #000000;
+            }
+        </style>
     </head>
 
 <body bgcolor="#A4A4A4"> <!--gray background -->
@@ -16,7 +22,9 @@
                 Song Title
                 <ul>
                 {% for song in songs %}
-                    <li>{{ song.title }}</li>
+                    <li>
+                    <a href="http://localhost:3000/lyrics/{{ song.title }}">{{ song.title }}</a>
+                    </li>
                 {% endfor %}
                 </ul>
             </div>

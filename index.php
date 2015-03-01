@@ -1,6 +1,9 @@
 <?php
 require "./vendor/autoload.php";
 
+include_once('Cloud.php');
+$cloud = new Cloud();
+
 require_once './vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('./Views/templates');
@@ -10,17 +13,46 @@ $twig = new Twig_Environment($loader, array(
 
 $app = new \Slim\Slim();
 
+// $dataManager = new dataManager()
+
 $app->get('/', function () use ($app, $twig) {
 	$template = $twig->loadTemplate('homePage.phtml');
 	$params = array('title' => 'Mezzolyrics');
 	$template->display($params);
 });
 
-$app->get('/songs', function () use ($app, $twig) {
+$app->get('/cloud', function () use ($app, $twig, $cloud) {
+	$artist = $app->request()->params('artist');
+	// $words = $dataManager->generateWordCloud($artist);
+	$words = array(
+		'moon' => 82,
+		'sun' => 29,
+		'sky' => 46,
+		'lights' => 25,
+		'tiger' => 30,
+		'snow' => 35,
+		'mountain' => 40,
+		'school' => 45,
+		'rose' => 50,
+		'USC' => 55,
+		'FUCLA' => 60,
+		'science' => 65
+		);
+	$wordCloud = $cloud->word_cloud($words);
+	$template = $twig->loadTemplate('wordCloudPage.phtml');
+	$params = array(
+		'title' => 'Mezzolyrics',
+		'cloud' => $wordCloud);
+	$template->display($params);
+});
+
+$app->get('/songs/:word', function ($word) use ($app, $twig) {
 	$template = $twig->loadTemplate('songListPage.phtml');
+	// $songs = $dataManager->getSongList($word);
 	$params = array(
 		'title' => 'Mezzolyrics', 
-		'searchword' => 'Word X',
+		'searchword' => $word,
+		// 'songs' => $songs,
 		'songs' => array(
 			array(
 				'title' => 'Song 1',
@@ -43,20 +75,15 @@ $app->get('/songs', function () use ($app, $twig) {
 	$template->display($params);
 });
 
-$app->get('/lyrics', function () use ($app, $twig) {
+$app->get('/lyrics/:song', function ($song) use ($app, $twig) {
+	$lyrics = 
 	$lyrics = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper malesuada sem, nec ornare libero fermentum scelerisque. Nulla sed elit malesuada, condimentum nunc ac, vehicula libero. Suspendisse sit amet tellus laoreet, laoreet felis sit amet, iaculis orci. Suspendisse in viverra tellus, quis venenatis nisl. Nullam in ligula arcu. Nunc commodo, ante eget tempor dapibus, diam dui porta nisl, id mollis libero lorem ut lacus. Quisque fringilla ante a semper porttitor. Donec a ornare ligula, nec luctus arcu. Sed in ex cursus, fringilla augue id, pretium sem. Suspendisse velit tellus, iaculis maximus libero ut, sodales feugiat tortor. Praesent laoreet, justo vel fermentum rutrum, lacus dolor dignissim est, mollis bibendum risus dui quis massa. Mauris sit amet ante bibendum, venenatis arcu a, viverra purus. Cras at purus ligula.';
 	$template = $twig->loadTemplate('lyricsPage.phtml');
 	$params = array(
 		'title' => 'Mezzolyrics',
-		'songtitle' => 'Song Y',
+		'songtitle' => $song,
 		'artist' => 'Artist Z',
 		'lyrics' => $lyrics);
-	$template->display($params);
-});
-
-$app->get('/cloud', function () use ($app, $twig) {
-	$template = $twig->loadTemplate('wordCloudPage.phtml');
-	$params = array('title' => 'Mezzolyrics');
 	$template->display($params);
 });
 
