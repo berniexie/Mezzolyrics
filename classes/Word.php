@@ -15,17 +15,17 @@ class Word
   
   public function getSongs()
   {
-    return $songs;
+    return $this->songs;
   }
   
   public function getString()
   {
-    return $word;
+    return $this->word;
   }
 
   public function getFrequency()
   {
-    return $frequency;
+    return $this->frequency;
   }
 }
 
