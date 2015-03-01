@@ -10,13 +10,22 @@ class Cloud
    		$this->artists = artists;
    		$this->lyricCloud = lyricCloud;
    	}
-
+       
+        /*
         public function addNewWords($newArtist, $newWords){
                 $artists[] = $newArtist;
                 for($i = 0; $i < count($newWords); $i++){
                     $lyricCloud[] = $newWords[$i];
                 }
+                //sort the array after adding an object
+
+
+                $lyricCloud = usort($lyricCloud, 
+                  function($a, $b){
+                    return ($a->getFrequency() > $b->getFrequency());
+                  });
         }
+        */
 
         public function getWordObject($word){
                 for($i = 0; $i < count($newWords); $i++){
@@ -26,10 +35,7 @@ class Cloud
                     }
                 }
         }
-
-        public function generateCloud(){
-
-        }
+         
 }
 
 ?>
