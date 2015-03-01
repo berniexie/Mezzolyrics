@@ -13,7 +13,8 @@ $twig = new Twig_Environment($loader, array(
 
 $app = new \Slim\Slim();
 
-// $dataManager = new dataManager()
+$dataManager = new DataManager()
+$cloudObject;
 
 $app->get('/', function () use ($app, $twig) {
 	$template = $twig->loadTemplate('homePage.phtml');
@@ -23,22 +24,8 @@ $app->get('/', function () use ($app, $twig) {
 
 $app->get('/cloud', function () use ($app, $twig, $cloud) {
 	$artist = $app->request()->params('artist');
-	// $words = $dataManager->generateWordCloud($artist);
-	$words = array(
-		'moon' => 82,
-		'sun' => 29,
-		'sky' => 46,
-		'lights' => 25,
-		'tiger' => 30,
-		'snow' => 35,
-		'mountain' => 40,
-		'school' => 45,
-		'rose' => 50,
-		'USC' => 55,
-		'FUCLA' => 60,
-		'science' => 65
-		);
-	$wordCloud = $cloud->word_cloud($words);
+	$cloudObject = $dataManager->getCloud($artist);
+	$wordCloud = $cloudObject->getWordCloudVisual();
 	$template = $twig->loadTemplate('wordCloudPage.phtml');
 	$params = array(
 		'title' => 'Mezzolyrics',
