@@ -77,11 +77,10 @@ class APIManager
             $title = $song['title'];
             $id = $song['id'];
             $lyrics = $this->getSongLyrics($id);
+            if(is_null($lyrics)) continue;
             $artist = $song['artist_name'];
             $s = new Song($title, $artist, $lyrics['display_lyrics'], $lyrics['lyrics_array']);
             $songs[] = $s;
-            break;
-            
         }
         return $songs;
     }
