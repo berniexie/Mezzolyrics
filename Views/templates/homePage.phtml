@@ -17,10 +17,11 @@
 
     <div id = "artistSearch">
         <form method='get' action='/cloud'>
-            <input type="text" name="artist" placeholder="Enter an artist">
+            <input type="text" id="artistName" name="artist" placeholder="Enter an artist">
             <input type="submit" class="buttons" value="Submit">
+            {% block search %}{% endblock %}
         </form>
-        {% block search %}{% endblock %}
+        {% block addartist %}{% endblock %}
     </div>
 
 </body>

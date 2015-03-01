@@ -16,10 +16,15 @@
 {{cloud|raw}}
 {% endblock %}
 {% block search %}
-<!--  this is where add to cloud functionality will be added and fb link
-<form id="search" method='get' action='?????'>
-    <input type="text" name="firstname" placeholder="Enter an artist">
-    <input type="submit" VALUE="Add to Cloud">
-</form> -->
+{{ parent() }}
+<input type="button" class="buttons" value="Add To Cloud" onclick="myFunction()">
+{% endblock %}
+{% block addartist %}
+<script>
+  function myFunction() {
+    var artist = document.getElementById("artistName").value;
+    window.location.href = "http://localhost:3000/cloud?artist=[add]"+artist;
+  }
+</script>
 {% endblock %}
 

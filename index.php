@@ -29,13 +29,18 @@ $app->get('/', function () use ($app, $twig) {
 
 $app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
 	$artist = $app->request()->params('artist');
-	$cloudObject = $dataManager->getCloud($artist);
-	$wordCloud = $cloudObject->getWordCloudVisual();
-	$template = $twig->loadTemplate('wordCloudPage.phtml');
-	$params = array(
-		'title' => 'Mezzolyrics',
-		'cloud' => $wordCloud);
-	$template->display($params);
+	if (strcmp(substr($artist, 0, 5), "[add]") == 0) {
+		// $cloudObject = $dataManager->getAddCloud($artist);
+	} 
+	else {
+		// $cloudObject = $dataManager->getSubmitCloud($artist);
+	}
+	// $wordCloud = $cloudObject->getWordCloudVisual();
+		$template = $twig->loadTemplate('wordCloudPage.phtml');
+		$params = array(
+			'title' => "Mezzolyrics",
+			'cloud' => $wordCloud);
+		$template->display($params);
 });
 
 $app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
