@@ -37,29 +37,12 @@ $app->get('/cloud', function () use ($app, $twig, $cloud) {
 
 $app->get('/songs/:word', function ($word) use ($app, $twig) {
 	$template = $twig->loadTemplate('songListPage.phtml');
-	// $songs = $dataManager->getSongList($word);
+	$wordObject = $cloudObject->getWordObject($word);
+	$songs = $wordObject->getSongTitles();
 	$params = array(
 		'title' => 'Mezzolyrics', 
 		'searchword' => $word,
-		// 'songs' => $songs,
-		'songs' => array(
-			array(
-				'title' => 'Song 1',
-				'frequency' => '4'
-			),
-			array(
-				'title' => 'Song 2',
-				'frequency' => '3'
-			),
-			array(
-				'title' => 'Song 3',
-				'frequency' => '2'
-			),
-			array(
-				'title' => 'Song 4',
-				'frequency' => '1'
-			)
-		)
+		'songs' => $songs
 	);
 	$template->display($params);
 });

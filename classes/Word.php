@@ -28,6 +28,18 @@ class Word
     return $this->map;
   }
 
+  public function getSongTitles()
+  {
+    $songList = array()
+    foreach ($this->map as $song => $freq) {
+      $songList[] = new array(
+        'title' => $song->getTitle(),
+        'frequency' => $freq
+      );
+    }
+    return $songList;
+  }
+
   public function incrementFrequency()
   {
     ++$frequency;

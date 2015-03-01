@@ -46,14 +46,10 @@ class Cloud
     $cloud = "<div style='width:{$div_size}px' id='cloud'>";
     $colors = array('#00FFFF', '#0000FF', '#7FFF00', '#6495ED', '#DC143C', '#8B008B', '#B22222', '#FFD700', '#008000');
 
-    /* This word cloud generation algorithm was taken from the Wikipedia page on "word cloud"
-       with some minor modifications to the implementation */
-    
-    /* Initialize some variables */
-    $fmax = 96; /* Maximum font size */
-    $fmin = 8; /* Minimum font size */
-    $tmin = min($words); /* Frequency lower-bound */
-    $tmax = max($words); /* Frequency upper-bound */
+    $fmax = 96;
+    $fmin = 8; 
+    $tmin = min($words); 
+    $tmax = max($words); 
 
     foreach ($words as $word => $frequency) {
     
