@@ -1,7 +1,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="pageStyles.css">
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
+    {% block style %} {% endblock %}
 </head>
 
 <body bgcolor="#A4A4A4"> <!--gray background -->
@@ -11,16 +12,15 @@
     </div>
 
     <div id="wordCloud">
-        {% block wordcloud %} {{ wordcloud}} {% endblock %}
-   </div>
+        {% block wordcloud %}{% endblock %}
+    </div>
 
     <div id = "artistSearch">
-        {% block search %}
-        <form id="search" method='get' action='/cloud'>
-            <input type="text" name="firstname" placeholder="Enter an artist">
+        <form method='get' action='/cloud'>
+            <input type="text" name="artist" placeholder="Enter an artist">
             <input type="submit" class="buttons" value="Submit">
         </form>
-        {% endblock %}
+        {% block search %}{% endblock %}
     </div>
 
 </body>
