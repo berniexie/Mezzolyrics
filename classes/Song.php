@@ -19,7 +19,7 @@ class Song
 
 	public function getFrequency($word)
 	{
-		return lyricMap[word];
+		return lyricMap[$word];
 	}
 
 	public function getArtist()
