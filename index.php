@@ -1,10 +1,9 @@
 <?php
 
 require "vendor/autoload.php";
-require "APIManager.php";
 
-include_once('Cloud.php');
-$cloud = new Cloud();
+include_once('/classes/Cloud.php');
+include_once('/classes/DataManager.php');
 
 require_once './vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
@@ -16,7 +15,7 @@ $twig = new Twig_Environment($loader, array(
 $app = new \Slim\Slim();
 
 $dataManager = new DataManager()
-$cloudObject;
+$cloudObject = null;
 
 $app->get('/', function () use ($app, $twig) {
 	$template = $twig->loadTemplate('homePage.phtml');
