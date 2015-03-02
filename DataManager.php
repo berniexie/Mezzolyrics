@@ -55,13 +55,9 @@ class DataManager
           $this->addArtist($artistName);
           $this->getWords();
           //only getting the first 250 elements 
-<<<<<<< HEAD
+
           $cloudArray = $this->words; 
           $cloudArray = array_slice($cloudArray, 0, 250);
-=======
-          //$cloudArray = clone $this->words;
-          $cloudArray = array_slice($this->words, 0, 250);
->>>>>>> 36f2ed7cd4fafea5de293aa0974fa66015a7dd00
           $this->cloud = new Cloud($this->artists, $cloudArray);
           return $this->cloud;
         }
