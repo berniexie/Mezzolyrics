@@ -14,7 +14,7 @@ $twig = new Twig_Environment($loader, array(
 $app = new \Slim\Slim();
 
 $dataManager = new DataManager();
-$cloudObject;
+$cloudObject = new stdClass();
 
 $app->get('/test', function () use ($app) {
 	$api = new APIManager();
