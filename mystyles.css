@@ -1,3 +1,8 @@
+ <style>
+#nothing{}
+#empty{
+    margin:40px;
+}
 #header {
     color:grey;
     text-align:center;
