@@ -89,8 +89,9 @@ class APIManager
                     foreach ($this->stop_words as $word) {
                         $simplified_lyrics = str_replace(' ' . $word . ' ', ' ', $simplified_lyrics);
                     }
+                     $lyrics_array = preg_split('/\s+/', $simplified_lyrics);
                     
-                    $s = new Song($track['title'], $track['artist'], $lyrics, $simplified_lyrics);
+                    $s = new Song($track['title'], $track['artist'], $lyrics, $lyrics_array);
                     $songs[] = $s;
                 } catch (Exception $e) {
                     continue;
