@@ -23,7 +23,7 @@
                 <ul>
                 {% for song in songs %}
                     <li>
-                    <a href="http://localhost:3000/lyrics/{{ song.title }}">{{ song.title }}</a>
+                    <a href="http://localhost:3000/lyrics/{{ song.title }}/{{ searchword }}">{{ song.title }}</a>
                     </li>
                 {% endfor %}
                 </ul>

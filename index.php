@@ -29,13 +29,18 @@ $app->get('/', function () use ($app, $twig) {
 
 $app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
 	$artist = $app->request()->params('artist');
-	$cloudObject = $dataManager->getSubmitCloud($artist);
-	$wordCloud = $cloudObject->getWordCloudVisual();
-	$template = $twig->loadTemplate('wordCloudPage.phtml');
-	$params = array(
-		'title' => 'Mezzolyrics',
-		'cloud' => $wordCloud);
-	$template->display($params);
+	if (strcmp(substr($artist, 0, 5), "[add]") == 0) {
+		$cloudObject = $dataManager->getAddCloud($artist);
+	} 
+	else {
+		$cloudObject = $dataManager->getSubmitCloud($artist);
+	}
+	    $wordCloud = $cloudObject->getWordCloudVisual();
+		$template = $twig->loadTemplate('wordCloudPage.phtml');
+		$params = array(
+			'title' => "Mezzolyrics",
+			'cloud' => $wordCloud);
+		$template->display($params);
 });
 
 $app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
@@ -50,10 +55,16 @@ $app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
 	$template->display($params);
 });
 
-$app->get('/lyrics/:song', function ($song) use ($app, $twig) {
-	$lyrics = "STUFFFFFFFFF";
-	// FILLL THIS IN
-	// $lyrics = $cloudObject->getWordObject
+$app->get('/lyrics/:song/:word', function ($song, $word) use ($app, $twig) {
+	$lyrics = $word;
+
+	// Get Word object for $word, then get map which contains Song objects
+	$tempWordObject = $cloudObject->getWordObject($word);
+	$tempMap = $tempWordObject->getMap();
+
+	// Get lyrics from Song object
+	$lyrics = $tempMap[$song]['songObject']->getOriginalLyrics();
+	
 	$template = $twig->loadTemplate('lyricsPage.phtml');
 	$params = array(
 		'title' => 'Mezzolyrics',
