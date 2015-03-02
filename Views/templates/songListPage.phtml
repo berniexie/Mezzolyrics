@@ -1,0 +1,53 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
+         <style>
+            a {
+                text-decoration: none;
+                color: #000000;
+            }
+        </style>
+    </head>
+
+<body bgcolor="#A4A4A4">
+    <div class="wrapper">
+        <div id="songHeader">
+            <h1><a href="http://localhost:3000/">{{ title }}</a></h1>
+            <h2>{{ searchword }}</h2> 
+        </div>
+
+        <div id = "songTitles">
+            <div id="titles">
+                Song Title
+                <ul>
+                {% for song in songs %}
+                    <li>
+                    <a href="http://localhost:3000/lyrics/{{ artist }}/{{ song.title }}/{{ searchword }}">{{ song.title }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div id = "frequency">
+            Frequency
+            <ul>
+            {% for song in songs %}
+                <li>{{ song.frequency }}</li>
+            {% endfor %}
+            </ul>
+       </div>
+       <div class="push"></div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <form method='get' action='/cloud/back'>
+                <input type="submit" class="buttons" value="Back">
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
