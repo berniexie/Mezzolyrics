@@ -71,6 +71,7 @@ class APIManager
         $urlArtistName = str_replace('$', '-', $urlArtistName);
         $urlArtistName = str_replace('--', '-s', $urlArtistName);
         $urlArtistName = str_replace('\'', '', $urlArtistName);
+        $urlArtistName = str_replace('.', '', $urlArtistName);
         $songs = array();
         foreach (album_list($urlArtistName) as $album) {
             $albumUrl = $album['link'];
