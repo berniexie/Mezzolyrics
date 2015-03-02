@@ -3,7 +3,6 @@
 //use Echonest\Service\Echonest;
 Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
 include_once('Song.php');
-require __DIR__ . '/vendor/musixmatch-php-lib/src/musixmatch.php';
 
 
 

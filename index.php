@@ -29,7 +29,7 @@ $app->get('/', function () use ($app, $twig) {
 
 $app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
 	$artist = $app->request()->params('artist');
-	$cloudObject = $dataManager->getCloud($artist);
+	$cloudObject = $dataManager->getSubmitCloud($artist);
 	$wordCloud = $cloudObject->getWordCloudVisual();
 	$template = $twig->loadTemplate('wordCloudPage.phtml');
 	$params = array(

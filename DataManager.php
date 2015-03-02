@@ -8,13 +8,17 @@ class DataManager
 {
 	private $artists = array();	//array of artists used to generate the cloud
 	private $words = array();	//array of Word objects
-  private $songs = array();
-  private $cloud;
-  private $apiManager;
+        private $songs = array();
+        private $cloud;
+        private $apiManager;
 
         public function __construct(){
           //the usefulness of this is debatable
           $this->apiManager = new APIManager();
+        }
+        
+        public function clearArtists(){
+          $this->artists = null;
         }
 
         public function addArtist($artistName){
@@ -46,13 +50,21 @@ class DataManager
           }
         }
 
-        public function getCloud($artistName){
+        //this is for when the addArtist button is clicked
+        public function getAddCloud($artistName){
           $this->addArtist($artistName);
           $this->getWords();
           //only getting the first 250 elements 
+          //$cloudArray = clone $this->words;
           $cloudArray = array_slice($this->words, 0, 250);
           $this->cloud = new Cloud($this->artists, $cloudArray);
           return $this->cloud;
+        }
+
+        //this is for when the submit button is clicked
+        public function getSubmitCloud($artistName){
+          $this->clearArtists();
+          return $this->getAddCloud($artistName);
         }
 }
 
