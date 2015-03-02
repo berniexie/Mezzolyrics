@@ -3,6 +3,8 @@
 //use Echonest\Service\Echonest;
 Echonest\Service\Echonest::configure("5UXT7FYJZR50ZQQCR");
 include_once('Song.php');
+include(__DIR__ . '/vendor/jacksonbrodeur/RapGenius-PHP/src/rapgenius.php');
+
 
 
 class APIManager
@@ -34,6 +36,7 @@ class APIManager
     public function __construct()
     {
         $this->spotify_api = new SpotifyWebAPI\SpotifyWebAPI();
+
     }
 
     // returns array of strings - artist names
@@ -64,65 +67,38 @@ class APIManager
     // returns array of Song objects containing all the songs of a given artist
     public function getArtistSongs($artistName)
     {
-        $response = Echonest\Service\Echonest::query('song', 'search', array(
-                                    'artist'=> $artistName,
-                                    'results'=> 100,
-                                    'rank_type' => 'familiarity',
-                                    'song_type' => 'studio',
-                                    'sort' => 'song_hotttnesss-desc'));
-        $response = json_decode(json_encode($response), true)['response'];
+        $urlArtistName = str_replace(' ', '-', $artistName);
+        $urlArtistName = str_replace('$', '-', $urlArtistName);
+        $urlArtistName = str_replace('--', '-s', $urlArtistName);
+        $urlArtistName = str_replace('\'', '', $urlArtistName);
+        $urlArtistName = str_replace('.', '', $urlArtistName);
         $songs = array();
-        foreach($response['songs'] as $song)
-        {
-            $title = $song['title'];
-            $id = $song['id'];
-            $lyrics = $this->getSongLyrics($id);
-            if(is_null($lyrics)) continue;
-            $artist = $song['artist_name'];
-            $s = new Song($title, $artist, $lyrics['display_lyrics'], $lyrics['lyrics_array']);
-            $songs[] = $s;
+        foreach (album_list($urlArtistName) as $album) {
+            $albumUrl = $album['link'];
+            
+            foreach (tracklist($albumUrl) as $track) {
+                $trackUrl = $track['link'];
+                try
+                {
+                    $lyrics = lyrics($trackUrl, FALSE);
+                    $simplified_lyrics = trim(preg_replace('/\[.*?\]/', '', $lyrics));
+                    $simplified_lyrics = str_replace('(', '', $simplified_lyrics);
+                    $simplified_lyrics = str_replace(')', '', $simplified_lyrics);
+                    $simplified_lyrics = preg_replace("/[^A-Za-z ]/", '', $simplified_lyrics);
+                    $simplified_lyrics = strtolower($simplified_lyrics);
+                    foreach ($this->stop_words as $word) {
+                        $simplified_lyrics = str_replace(' ' . $word . ' ', ' ', $simplified_lyrics);
+                    }
+                    
+                    $s = new Song($track['title'], $track['artist'], $lyrics, $simplified_lyrics);
+                    $songs[] = $s;
+                } catch (Exception $e) {
+                    continue;
+                }
+                
+            }
         }
         return $songs;
-    }
-
-    // returns string containing lyrics
-    public function getSongLyrics($id)
-    {
-        $response = Echonest\Service\Echonest::query('song', 'profile', array(
-                                    'id' => $id));
-        $response = json_decode(json_encode($response), true)['response'];
-        try
-        {
-            $title = $response['songs'][0]['title'];
-            $artist = $response['songs'][0]['artist_name'];
-            $artist_lower = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $artist));
-            $title_lower = strtolower(preg_replace("/[^A-Za-z0-9]/", '', $title));
-            $html = file_get_contents('http://www.azlyrics.com/lyrics/' . $artist_lower . '/' . $title_lower . '.html');
-        } catch (Exception $e) {
-            return null;
-        }
-        
-        $html =  substr($html, strpos($html, "start of lyrics"), strpos($html, "end of lyrics") - strpos($html, "start of lyrics"));
-        $html = str_replace('<!--', '', $html);
-        $html = str_replace('start of lyrics -->', '', $html);
-        $display_lyrics = $html;
-        $html = str_replace('<i>', '', $html);
-        $html = str_replace('</i>', '', $html);
-        $html = preg_replace('#\s*\[.+\]\s*#U', ' ', $html);
-        $html = str_replace('<!--', '', $html);
-        $html = str_replace('<br />', ' ', $html);
-
-        $html = strtolower(preg_replace("/[^A-Za-z ]/", '', $html));
-        $simple_lyrics = $html;
-        foreach ($this->stop_words as $word) {
-            $simple_lyrics = str_replace(' ' . $word . ' ', ' ', $simple_lyrics);
-        }
-
-        $lyrics_array = preg_split('/\s+/', $simple_lyrics);
-        
-
-        $song = new Song($title, $artist, $display_lyrics, $lyrics_array);
-        return compact('display_lyrics', 'lyrics_array');
     }
 
     // sharee word cloud to facebook

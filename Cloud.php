@@ -39,7 +39,7 @@ class Cloud
   function getWordCloudVisual($div_size = 400) {
 
     $words = array();
-    foreach (wordObjectArray as $word) {
+    foreach ($this->wordObjectArray as $word) {
       $words[$word->getContent()] = $word->getFrequency();
     }
 
