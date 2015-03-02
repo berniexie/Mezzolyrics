@@ -13,8 +13,8 @@ class APIManager
 
     private $spotify_api;
     //http://www.ranks.nl/stopwords
-    private $stop_words = array('a','about','above','after','again',
-                                'against','all','am','an','and','any','are','arent',
+    private $stop_words = array('a','about','above','after','again', 'know', 'like' ,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+                                'against','all','am','an','and','any','are','arent', 'us', 'tell', 'let',
                                 'as','at','be','because','been','before','being',
                                 'below','between','both','but','by','cant','cannot',
                                 'could','couldnt','did','didnt','do','does','doesnt',

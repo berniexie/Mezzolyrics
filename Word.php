@@ -15,8 +15,13 @@ class Word
     //$this->map[$song] = 1;
     $this->map[$song->getTitle()] = array(
       'songObject' => $song,
-      'frequencyInSong' => 1
+      'frequencyInSong' => 1  
       );
+  }
+
+  public function getString()
+  {
+    return $this->content;
   }
   
   public function getContent()
@@ -37,10 +42,10 @@ class Word
   public function getSongTitles()
   {
     $songList = array();
-    foreach ($this->map as $song => $freq) {
+    foreach ($this->map as $title => $song) {
       $songList[] = array(
-        'title' => $song->getTitle(),
-        'frequency' => $freq
+        'title' => $title,
+        'frequency' => $song['frequencyInSong']
       );
     }
     return $songList;
