@@ -18,7 +18,7 @@ $cloudObject;
 
 $app->get('/test', function () use ($app) {
 	$api = new APIManager();
-	print_r($api->getArtistSongs("coldplay"));
+	print_r($api->getArtistSongs("kings of leon"));
 });
 
 $app->get('/', function () use ($app, $twig) {

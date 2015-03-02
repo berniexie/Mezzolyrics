@@ -11,12 +11,25 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jacksonbrodeur/RapGenius-PHP",
+                "version": "1.0",
+                "source": {
+                    "url": "https://github.com/jacksonbrodeur/RapGenius-PHP.git",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
         "slim/slim": "2.*",
         "bshaffer/php-echonest-api" : "1.0",
         "echonest/echonest": "dev-master",
-        "jwilsson/spotify-web-api-php": "0.7.*"
+        "jwilsson/spotify-web-api-php": "0.7.*",
+        "jacksonbrodeur/RapGenius-PHP": "1.0"
     }
 }
