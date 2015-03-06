@@ -43,8 +43,12 @@ class Cloud
       $words[$word->getContent()] = $word->getFrequency();
     }
 
+    $tags = 0;
     $cloud = "<div style='width:{$div_size}px' id='cloud'>";
-    $colors = array('#00FFFF', '#0000FF', '#7FFF00', '#6495ED', '#DC143C', '#8B008B', '#B22222', '#FFD700', '#008000');
+    $colors = array('#F60D0D', '#AF0D0D', '#F04646', '#F90F65', '#B10A66', '#F357AD', '#D704E6', 
+      '#E565EE', '#90059A', '#3611F0', '#7057EF', '#1F0893', '#10A3EF', '#56B8E9', '#106995', 
+      '#06ECC5', '#6EF4DE', '#02957D', '#0AEB54', '#5DF18E', '#029D35', '#F3E717', '#F56808', '#FF5B00');
+    shuffle($colors);
 
     $fmax = 66;
     $fmin = 8; 
@@ -52,14 +56,11 @@ class Cloud
     $tmax = max($words); 
 
     foreach ($words as $word => $frequency) {
-    
-        if ($frequency > $tmin) {
-            $font_size = floor(  ( $fmax * ($frequency - $tmin) ) / ( $tmax - $tmin )  );
-            $color = $colors[mt_rand(0,8)];
-        }
-        $cloud .= "<a href='http://localhost:3000/songs/{$word}' style=\"font-size: {$font_size}px; color: $color;\">$word &nbsp;</a>";
+      $font_size = floor(  ( $fmax * ($frequency - $tmin) ) / ( $tmax - $tmin )  );
+      $color = $colors[$tags % sizeof($colors)];
+      $cloud .= "<a href='http://localhost:3000/songs/{$word}' style=\"font-size: {$font_size}px; color: $color;\">$word &nbsp;</a>";
+      $tags++;
     }
-    
     $cloud .= "</div>";
     
     return $cloud;
