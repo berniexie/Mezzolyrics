@@ -57,14 +57,7 @@ class Cloud
             $font_size = floor(  ( $fmax * ($frequency - $tmin) ) / ( $tmax - $tmin )  );
             $color = $colors[mt_rand(0,8)];
         }
-        else {
-            $font_size = 0;
-        }
-        
-        if ($font_size >= $fmin) {
-          $cloud .= "<a href='http://localhost:3000/songs/{$word}' style=\"font-size: {$font_size}px; color: $color;\">$word &nbsp;</a>";
-        }
-        
+        $cloud .= "<a href='http://localhost:3000/songs/{$word}' style=\"font-size: {$font_size}px; color: $color;\">$word &nbsp;</a>";
     }
     
     $cloud .= "</div>";
