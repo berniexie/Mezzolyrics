@@ -2,7 +2,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css"> 
-     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script>
@@ -34,12 +34,33 @@
             $( "#tags" ).autocomplete({
             source: availableTags
             });
-        });
+
+            // $("#tags").autocomplete({
+            //     minLength: 2,                                          
+            //     source: availableTags,        
+            //     select: function( event, ui ) {
+            //         window.location.href = ui.item.value;
+            //     }
+            // }).data("uiAutocomplete")._renderItem = function (ul, item) {
+            //         return $("<li />")
+            //             .data("item.autocomplete", item)
+            //             .append("<a><img src='" + item.icon + "' />" + item.label + "</a>")
+            //             .appendTo(ul);
+            //         }; 
+            });
     </script>  
     <style>
     a {
         text-decoration: none;
         color: #000000;
+    }
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+     * html .ui-autocomplete {
+        height: 100px;
     }
     {% block style %}
     {% endblock %}
@@ -59,7 +80,7 @@
     <div id="artistSearch">
     <div class="ui-widget">
         <form method='get' action='/cloud/new'>
-            <input type="text" id="tags" name="artist" placeholder="Enter an artist">
+            <input id="tags" name="artist" placeholder="Enter an artist">
             <br />
             <input type="submit" class="buttons" value="Submit">
             {% block search %}{% endblock %}
