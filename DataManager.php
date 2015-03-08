@@ -21,10 +21,18 @@ class DataManager
           $this->artists = null;
         }
 
+        public function getAutofillSuggestions($userInput){
+          return $this->apiManager->getArtistSuggestion($userInput);
+        }
+
         public function addArtist($artistName){
           $this->artists[] = $artistName;   
-          //Use the APIManager to fill in songs with Song Objs from the artist
-          $this->songs = $this->apiManager->getArtistSongs($artistName);
+          
+          // Get songs from new artist
+          $newSongs = $this->apiManager->getArtistSongs($artistName);
+
+          // Add songs from new artist to songs array
+          $this->songs = array_merge($this->songs, $newSongs);
         }
          
         public function getWords(){

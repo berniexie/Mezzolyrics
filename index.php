@@ -63,6 +63,7 @@ $app->get('/songs/:word', function ($word) use ($app, $twig) {
 
 $app->get('/lyrics/:song/:word', function ($song, $word) use ($app, $twig) {
 	$cloudObject = $_SESSION['cloud'];
+	
 	// Get Word object for $word, then get map which contains Song objects
 	$tempWordObject = $cloudObject->getWordObject($word);
 	$tempMap = $tempWordObject->getMap();
