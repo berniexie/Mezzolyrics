@@ -66,7 +66,7 @@ class APIManager
     }
 
     // returns array of Song objects containing all the songs of a given artist
-    public function getArtistSongs($artistName)
+    public function getArtistSongs($artistName, $limit = 25)
     {
         $urlArtistName = str_replace(' ', '-', $artistName);
         $urlArtistName = str_replace('$', '-', $urlArtistName);
@@ -76,9 +76,16 @@ class APIManager
         $songs = array();
         foreach (album_list($urlArtistName) as $album) {
             $albumUrl = $album['link'];
-            
-            foreach (tracklist($albumUrl) as $track) {
+
+            try
+            {
+                $tracks = tracklist($albumUrl);
+            } catch (Exception $e) {
+                continue;
+            }
+            foreach ($tracks as $track) {
                 $trackUrl = $track['link'];
+                if(rand() % 2) continue;
                 try
                 {
                     $lyrics = lyrics($trackUrl, FALSE);
@@ -94,6 +101,7 @@ class APIManager
                     
                     $s = new Song($track['title'], $track['artist'], $lyrics, $lyrics_array);
                     $songs[] = $s;
+                    if(count($songs) >= $limit) return $songs;
                 } catch (Exception $e) {
                     continue;
                 }
