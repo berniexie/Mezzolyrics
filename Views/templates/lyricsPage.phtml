@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
 </head>
 
-<body bgcolor="#A4A4A4"> <!--gray background-->
+<body bgcolor="#A4A4A4">
     <div class="wrapper">
       <div id="lyricsHeader">
          <h1>{{ songtitle }}</h1>
@@ -17,10 +17,10 @@
 
     <div class="footer">
       <div>
-        <form method='get' action='/songs'>
+        <form method='get' action='/songs/{{ word }}'>
           <input type="submit" class="buttons" value="Song Selection">
         </form>
-        <form method='get' action='/cloud'>
+        <form method='get' action='/cloud/back'>
           <input type="submit" class="buttons" VALUE="Word Cloud">
         </form>
       </div>

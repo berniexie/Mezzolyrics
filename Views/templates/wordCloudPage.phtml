@@ -1,25 +1,31 @@
 {% extends "homePage.phtml" %}
-{% block style %}    <style>
-            a {
-                text-decoration: none;
-                color: #000000;
-            }
-            #cloud {
-                position: relative;
-  				top: 50%;
-  				transform: translateY(-50%);
-  				margin: 0 auto;
-            }
-    </style>
+{% block style %}
+#cloud {
+position: relative;
+top: 50%;
+transform: translateY(-50%);
+margin: 0 auto;
+}
 {% endblock %}
-{% block wordcloud %}  
+{% block wordcloud %}
 {{cloud|raw}}
 {% endblock %}
 {% block search %}
-<!--  this is where add to cloud functionality will be added and fb link
-<form id="search" method='get' action='?????'>
-    <input type="text" name="firstname" placeholder="Enter an artist">
-    <input type="submit" VALUE="Add to Cloud">
-</form> -->
+{{ parent() }}
+<input type="button" class="buttons" value="Add To Cloud" onclick="myFunction()">
 {% endblock %}
-
+{% block addartist %}
+<div class="fb-share-button" data-href="http://comprendia.com/wp-content/uploads/2011/02/SDBN-tagxedo-for-SM-workshop-4.jpg" data-layout="button"></div><div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+function myFunction() {
+var artist = document.getElementById("artistName").value;
+window.location.href = "http://localhost:3000/cloud/add?artist="+artist;
+}
+</script>
+{% endblock %}

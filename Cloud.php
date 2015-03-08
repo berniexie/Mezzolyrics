@@ -27,7 +27,7 @@ class Cloud
   }
   */
 
-  public function getWordObject($word){
+  function getWordObject($word){
           for($i = 0; $i < count($this->wordObjectArray); $i++){
               $wordObj = $this->wordObjectArray[$i];
               if($wordObj->getString() == $word){
@@ -36,17 +36,17 @@ class Cloud
           }
   }
 
-  function getWordCloudVisual($div_size = 400) {
+  function getWordCloudVisual($div_size = 800) {
 
     $words = array();
-    foreach ($this->wordObjectArray as $word) {
+    foreach ($this->wordObjectArray as $word)     {
       $words[$word->getContent()] = $word->getFrequency();
     }
 
     $cloud = "<div style='width:{$div_size}px' id='cloud'>";
     $colors = array('#00FFFF', '#0000FF', '#7FFF00', '#6495ED', '#DC143C', '#8B008B', '#B22222', '#FFD700', '#008000');
 
-    $fmax = 96;
+    $fmax = 66;
     $fmin = 8; 
     $tmin = min($words); 
     $tmax = max($words); 

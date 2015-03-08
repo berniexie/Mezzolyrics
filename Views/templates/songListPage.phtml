@@ -10,11 +10,11 @@
         </style>
     </head>
 
-<body bgcolor="#A4A4A4"> <!--gray background -->
+<body bgcolor="#A4A4A4">
     <div class="wrapper">
         <div id="songHeader">
-            <h1>{{ title }}</h1>
-            <h2>{{ searchword }}</h2> <!-- VARIABLE -->
+            <h1><a href="http://localhost:3000/">{{ title }}</a></h1>
+            <h2>{{ searchword }}</h2> 
         </div>
 
         <div id = "songTitles">
@@ -23,7 +23,7 @@
                 <ul>
                 {% for song in songs %}
                     <li>
-                    <a href="http://localhost:3000/lyrics/{{ song.title }}">{{ song.title }}</a>
+                    <a href="http://localhost:3000/lyrics/{{ artist }}/{{ song.title }}/{{ searchword }}">{{ song.title }}</a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -43,7 +43,7 @@
 
     <div class="footer">
         <div>
-            <form method='get' action='/cloud'>
+            <form method='get' action='/cloud/back'>
                 <input type="submit" class="buttons" value="Back">
             </form>
         </div>

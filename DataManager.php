@@ -30,20 +30,19 @@ class DataManager
         public function getWords(){
           foreach($this->songs as $song){            
             $lyrics = $song->getParsedLyrics(); //this gets the individual lyrics
-                                               // Why was this commented out?
             foreach($lyrics as $lyric){
               $bool = false;
               foreach($this->words as $word){
                 //if it does, call the found() function in the word
                 if($lyric == $word->getContent()){
-                  $word->found();
+                  $word->found($song);
                   $bool = true; 
                 }
               }
               if($bool == false) {
                 //If not, initialize it to a word object and add it to the array
                 $word = new Word($lyric, $song);
-                $words[] = $word;
+                $this->words[] = $word;
               }
             }
             unset($song); //this pops the item from the array

@@ -1,14 +1,21 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
-    {% block style %} {% endblock %}
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">   
+    <style>
+    a {
+        text-decoration: none;
+        color: #000000;
+    }
+    {% block style %}
+    {% endblock %}
+    </style>
 </head>
 
-<body bgcolor="#A4A4A4"> <!--gray background -->
+<body bgcolor="#A4A4A4">
 
     <div id="wordCloudHeader">
-        <h1>{{ title }}<h1>
+        <h1><a href="http://localhost:3000/">{{ title }}</a><h1>
     </div>
 
     <div id="wordCloud">
@@ -16,11 +23,13 @@
     </div>
 
     <div id = "artistSearch">
-        <form method='get' action='/cloud'>
-            <input type="text" name="artist" placeholder="Enter an artist">
+        <form method='get' action='/cloud/new'>
+            <input type="text" id="artistName" name="artist" placeholder="Enter an artist">
+            <br />
             <input type="submit" class="buttons" value="Submit">
+            {% block search %}{% endblock %}
         </form>
-        {% block search %}{% endblock %}
+        {% block addartist %}{% endblock %}
     </div>
 
 </body>

@@ -1,5 +1,4 @@
 <?php
-
 require "vendor/autoload.php";
 
 include_once('Cloud.php');
@@ -8,18 +7,13 @@ require_once './vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('./Views/templates');
 $twig = new Twig_Environment($loader, array(
-    // 'cache' => './tmp/cache',  # turned off for development purposes
+    'cache' => './tmp/cache',  # turned off for development purposes
 ));
-
+session_cache_limiter(false);
+session_start();
 $app = new \Slim\Slim();
 
-$dataManager = new DataManager();
-$cloudObject = new stdClass();
-
-$app->get('/test', function () use ($app) {
-	$api = new APIManager();
-	print_r($api->getArtistSongs("kings of leon"));
-});
+$app->dataManager = new DataManager();
 
 $app->get('/', function () use ($app, $twig) {
 	$template = $twig->loadTemplate('homePage.phtml');
@@ -27,39 +21,66 @@ $app->get('/', function () use ($app, $twig) {
 	$template->display($params);
 });
 
-$app->get('/cloud', function () use ($app, $twig, $dataManager, $cloudObject) {
+$app->get('/cloud/:type', function ($type) use ($app, $twig) {
 	$artist = $app->request()->params('artist');
-	$cloudObject = $dataManager->getSubmitCloud($artist);
-	$wordCloud = $cloudObject->getWordCloudVisual();
-	$template = $twig->loadTemplate('wordCloudPage.phtml');
-	$params = array(
-		'title' => 'Mezzolyrics',
-		'cloud' => $wordCloud);
-	$template->display($params);
+ 	if ($type == "back") {
+		$wordCloud = $_SESSION['wordCloud'];
+		$template = $twig->loadTemplate('wordCloudPage.phtml');
+		$params = array(
+			'title' => "Mezzolyrics",
+			'cloud' => $wordCloud);
+		$template->display($params);
+	} else {
+		$_SESSION['artist'] = $artist;
+		if ($type == "add") {
+			$cloudObject = $app->dataManager->getAddCloud($artist);
+		} 
+		else {
+			$cloudObject = $app->dataManager->getSubmitCloud($artist);
+		}
+	    $wordCloud = $cloudObject->getWordCloudVisual();
+	    $_SESSION['wordCloud'] = $wordCloud;
+	    $_SESSION['cloud'] = $cloudObject;
+		$template = $twig->loadTemplate('wordCloudPage.phtml');
+		$params = array(
+			'title' => "Mezzolyrics",
+			'cloud' => $wordCloud);
+		$template->display($params);
+	}
 });
 
-$app->get('/songs/:word', function ($word) use ($app, $twig, $cloudObject) {
+$app->get('/songs/:word', function ($word) use ($app, $twig) {
 	$template = $twig->loadTemplate('songListPage.phtml');
+	$artist = $_SESSION['artist'];
+	$cloudObject = $_SESSION['cloud'];
 	$wordObject = $cloudObject->getWordObject($word);
 	$songs = $wordObject->getSongTitles();
 	$params = array(
 		'title' => 'Mezzolyrics', 
 		'searchword' => $word,
-		'songs' => $songs
+		'songs' => $songs,
+		'artist' => $artist
 	);
 	$template->display($params);
 });
 
-$app->get('/lyrics/:song', function ($song) use ($app, $twig) {
-	$lyrics = "STUFFFFFFFFF";
-	// FILLL THIS IN
-	// $lyrics = $cloudObject->getWordObject
+$app->get('/lyrics/:artist/:song/:word', function ($artist, $song, $word) use ($app, $twig) {
+	$cloudObject = $_SESSION['cloud'];
+	// Get Word object for $word, then get map which contains Song objects
+	$tempWordObject = $cloudObject->getWordObject($word);
+	$tempMap = $tempWordObject->getMap();
+
+	// Get lyrics from Song object
+	$lyrics = $tempMap[$song]['songObject']->getOriginalLyrics();
+	
 	$template = $twig->loadTemplate('lyricsPage.phtml');
 	$params = array(
 		'title' => 'Mezzolyrics',
 		'songtitle' => $song,
-		'artist' => 'Artist Z',
-		'lyrics' => $lyrics);
+		'artist' => $artist,
+		'lyrics' => $lyrics,
+		'word' => $word
+		);
 	$template->display($params);
 });
 
