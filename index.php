@@ -7,7 +7,7 @@ require_once './vendor/Twig/Autoloader.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('./Views/templates');
 $twig = new Twig_Environment($loader, array(
-    'cache' => './tmp/cache',  # turned off for development purposes
+    // 'cache' => './tmp/cache',  # turned off for development purposes
 ));
 session_cache_limiter(false);
 session_start();
@@ -15,10 +15,18 @@ $app = new \Slim\Slim();
 
 $app->dataManager = new DataManager();
 
-$app->get('/', function () use ($app, $twig) {
+$app->get('/', function () use ($app, $twig) {	
 	$template = $twig->loadTemplate('homePage.phtml');
 	$params = array('title' => 'Mezzolyrics');
 	$template->display($params);
+});
+
+$app->get('/auto', function () use ($app, $twig) {
+	$tags = $app->request()->params('q');
+	$callback = $app->request()->params('callback');
+	$auto = $app->dataManager->getAutofillSuggestions($tags);
+	echo $callback . '(' . json_encode($auto) . ');';
+
 });
 
 $app->get('/cloud/:type', function ($type) use ($app, $twig) {
@@ -42,7 +50,7 @@ $app->get('/cloud/:type', function ($type) use ($app, $twig) {
 	    $_SESSION['cloud'] = $cloudObject;
 		$template = $twig->loadTemplate('wordCloudPage.phtml');
 		$params = array(
-			'title' => "Mezzolyrics",
+			'title' => 'Mezzolyrics',
 			'cloud' => $wordCloud);
 		$template->display($params);
 	}
