@@ -13,22 +13,18 @@ session_cache_limiter(false);
 session_start();
 $app = new \Slim\Slim();
 
-//$app->dataManager = new DataManager();
-
 $app->get('/', function () use ($app, $twig) {	
 	$template = $twig->loadTemplate('homePage.phtml');
 	$params = array('title' => 'Mezzolyrics');
 	$template->display($params);
-
 	$_SESSION['dataManager'] = new DataManager();
 });
 
 $app->get('/auto', function () use ($app, $twig) {
 	$tags = $app->request()->params('q');
 	$callback = $app->request()->params('callback');
-	$auto = $app->dataManager->getAutofillSuggestions($tags);
+	$auto = $_SESSION['dataManager']->getAutofillSuggestions($tags);
 	echo $callback . '(' . json_encode($auto) . ');';
-
 });
 
 $app->get('/cloud/:type', function ($type) use ($app, $twig) {
