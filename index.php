@@ -13,12 +13,14 @@ session_cache_limiter(false);
 session_start();
 $app = new \Slim\Slim();
 
-$app->dataManager = new DataManager();
+//$app->dataManager = new DataManager();
 
 $app->get('/', function () use ($app, $twig) {	
 	$template = $twig->loadTemplate('homePage.phtml');
 	$params = array('title' => 'Mezzolyrics');
 	$template->display($params);
+
+	$_SESSION['dataManager'] = new DataManager();
 });
 
 $app->get('/auto', function () use ($app, $twig) {
@@ -40,10 +42,10 @@ $app->get('/cloud/:type', function ($type) use ($app, $twig) {
 		$template->display($params);
 	} else {
 		if ($type == "add") {
-			$cloudObject = $app->dataManager->getAddCloud($artist);
+			$cloudObject = $_SESSION['dataManager']->getAddCloud($artist);
 		} 
 		else {
-			$cloudObject = $app->dataManager->getSubmitCloud($artist);
+			$cloudObject = $_SESSION['dataManager']->getSubmitCloud($artist);
 		}
 	    $wordCloud = $cloudObject->getWordCloudVisual();
 	    $_SESSION['wordCloud'] = $wordCloud;
