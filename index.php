@@ -27,8 +27,15 @@ $app->get('/auto', function () use ($app, $twig) {
 	echo $callback . '(' . json_encode($auto) . ');';
 });
 
+$app->get('/image', function () use ($app, $twig) {
+	$artist = $app->request()->params('q');
+	$callback = $app->request()->params('callback');
+	$imageURL = $_SESSION['dataManager']->getArtistPicture($artist);
+	echo $imageURL;
+});
+
 $app->get('/cloud/:type', function ($type) use ($app, $twig) {
-	$artist = $app->request()->params('artist');
+	$artist = $app->request() ->params('artist');
  	if ($type == "back") {
 		$wordCloud = $_SESSION['wordCloud'];
 		$template = $twig->loadTemplate('wordCloudPage.phtml');
@@ -65,6 +72,17 @@ $app->get('/songs/:word', function ($word) use ($app, $twig) {
 		'songs' => $songs
 		);
 	$template->display($params);
+});
+
+$app->get('/:title', function($title) use ($app) {
+	// $cloudObject = $_SESSION['cloud'];
+	// // Get Word object for $word, then get map which contains Song objects
+	// $tempWordObject = $cloudObject->getWordObject($word);
+	// $tempMap = $tempWordObject->getMap();
+
+	// $lyrics = $tempMap[$song]['songObject']->getOriginalLyrics();
+	// echo $lyrics;
+	echo $title;
 });
 
 $app->get('/lyrics/:song/:word', function ($song, $word) use ($app, $twig) {

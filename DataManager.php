@@ -30,6 +30,11 @@ class DataManager
     return $this->apiManager->getArtistSuggestion($userInput);
   }
 
+  public function getArtistPicture($artist)
+  {
+    return $this->apiManager->getArtistPicture($artist);
+  }
+
   public function addArtist($artistName)
   {
     $this->artists[] = $artistName;
