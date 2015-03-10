@@ -5,6 +5,7 @@ ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    white-space: nowrap;
 }
 form {
     display: inline-block;
@@ -32,7 +33,7 @@ form {
 }
 #artistSearch{
     margin: 0 auto;
-    width: 300px;
+    width: 400px;
 }
 #search {
     width: 300px;

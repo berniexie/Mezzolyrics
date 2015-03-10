@@ -8,10 +8,10 @@
     <div class="wrapper">
       <div id="lyricsHeader">
          <h1>{{ songtitle }}</h1>
-         <h2>{{ artist }}</h2>
+         <h2>{{ artist | raw }}</h2>
       </div>
 
-      <div id = "lyrics">{{ lyrics }}</div>
+      <div id = "lyrics">{{ lyrics | raw }}</div>
       <div class="push"></div>
     </div>
 

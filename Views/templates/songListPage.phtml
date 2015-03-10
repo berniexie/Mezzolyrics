@@ -1,43 +1,50 @@
 <html>
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
-         <style>
-            a {
-                text-decoration: none;
-                color: #000000;
-            }
-        </style>
-    </head>
-
+<head>
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/pageStyles.css">
+     <style>
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+        table, th, td {
+            padding: 5px;
+            text-align: left;
+            width: 600px;
+        }
+        table#t01 td:nth-child(even) {
+            text-align: right;
+        }
+        table#t01 th:nth-child(even) {
+            text-align: right;
+        }
+    </style>
+</head>
 <body bgcolor="#A4A4A4">
     <div class="wrapper">
         <div id="songHeader">
             <h1><a href="http://localhost:3000/">{{ title }}</a></h1>
-            <h2>{{ searchword }}</h2> 
+            <h2>"{{ searchword }}"</h2> 
         </div>
 
         <div id = "songTitles">
             <div id="titles">
-                Song Title
-                <ul>
-                {% for song in songs %}
-                    <li>
-                    <a href="http://localhost:3000/lyrics/{{ artist }}/{{ song.title }}/{{ searchword }}">{{ song.title }}</a>
-                    </li>
-                {% endfor %}
-                </ul>
+                <table id="t01" rules="rows">
+                    <tr>
+                    <th>Song Title</th>
+                    <th>Frequency</th>      
+                    </tr>
+                    {% for song in songs %}
+                        <tr>
+                        <td>
+                        <a href="http://localhost:3000/lyrics/{{ song.title }}/{{ searchword }}">{{ song.title }}</a>
+                        </td>
+                        <td> {{ song.frequency }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
-
-        <div id = "frequency">
-            Frequency
-            <ul>
-            {% for song in songs %}
-                <li>{{ song.frequency }}</li>
-            {% endfor %}
-            </ul>
-       </div>
        <div class="push"></div>
     </div>
 
@@ -48,6 +55,6 @@
             </form>
         </div>
     </div>
-
 </body>
+
 </html>
