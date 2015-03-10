@@ -37,10 +37,18 @@ class Cloud
   }
 
   function getWordCloudVisual($div_size = 800) {
+    $totalSize = 0;
+    $optimal = 2000;
+    $multiplier = 2;
 
     $words = array();
     foreach ($this->wordObjectArray as $word)     {
       $words[$word->getContent()] = $word->getFrequency();
+      $totalSize += $word->getFrequency();
+    }
+
+    if ($totalSize > 1000) {
+      $multiplier = ($optimal/$totalSize);
     }
 
     $tags = 0;
@@ -51,12 +59,12 @@ class Cloud
     shuffle($colors);
 
     $fmax = 66;
-    $fmin = 8; 
+    $fmin = 12; 
     $tmin = min($words); 
-    $tmax = max($words); 
+    $tmax = max($words);  
 
     foreach ($words as $word => $frequency) {
-      $font_size = floor(  ( $fmax * ($frequency - $tmin) ) / ( $tmax - $tmin )  );
+      $font_size = floor($multiplier * (  ( $fmax * ($frequency - $tmin) ) / ( $tmax - $tmin )  ));
       $color = $colors[$tags % sizeof($colors)];
       $cloud .= "<a href='http://localhost:3000/songs/{$word}' style=\"font-size: {$font_size}px; color: $color;\">$word &nbsp;</a>";
       $tags++;

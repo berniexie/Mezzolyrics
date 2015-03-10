@@ -23,6 +23,7 @@ js = d.createElement(s); js.id = id;
 js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
 function myFunction() {
 var artist = document.getElementById("artistName").value;
 window.location.href = "http://localhost:3000/cloud/add?artist="+artist;
