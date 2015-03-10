@@ -19,6 +19,11 @@ class Word
       );
   }
 
+  public function cmp($a, $b)
+  {
+    return ($a['frequency'] < $b['frequency']);
+  }
+
   public function getString()
   {
     return $this->content;
@@ -48,6 +53,10 @@ class Word
         'frequency' => $song['frequencyInSong']
       );
     }
+
+    // Sort songs by freqency
+    uasort($songList, array("Word", 'cmp'));
+
     return $songList;
   }
 

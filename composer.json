@@ -30,6 +30,7 @@
         "bshaffer/php-echonest-api" : "1.0",
         "echonest/echonest": "dev-master",
         "jwilsson/spotify-web-api-php": "0.7.*",
-        "jacksonbrodeur/RapGenius-PHP": "1.0"
+        "jacksonbrodeur/RapGenius-PHP": "1.0",
+        "phpunit/phpunit": "4.5.*"
     }
 }

@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Zend\\Validator\\' => array($vendorDir . '/zendframework/zend-validator'),
     'Zend\\Uri\\' => array($vendorDir . '/zendframework/zend-uri'),
     'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib'),
@@ -14,5 +15,8 @@ return array(
     'Zend\\I18n\\' => array($vendorDir . '/zendframework/zend-i18n'),
     'Zend\\Http\\' => array($vendorDir . '/zendframework/zend-http'),
     'Zend\\Escaper\\' => array($vendorDir . '/zendframework/zend-escaper'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Slim' => array($vendorDir . '/slim/slim'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src'),
 );
