@@ -101,7 +101,6 @@ class APIManager
                     }
                      $lyrics_array = preg_split('/\s+/', $simplified_lyrics);
                     
-                    $lyrics = nl2br($lyrics);
                     $title = str_replace('.', '', $track['title']);
                     $s = new Song($title, $track['artist'], $lyrics, $lyrics_array);
                     $songs[] = $s;
