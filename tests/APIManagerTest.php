@@ -31,7 +31,8 @@ class APIManagerTest extends PHPUnit_Framework_TestCase
     {
         $expected_count = 10;
         $suggestions = $this->api->getArtistSuggestion("Col");
-        $this->assertEquals(json_encode(array("Coldplay","J. Cole","Colbie Caillat","Cole Swindell","Cheryl Cole","Cold War Kids","Syn Cole","Maya Jane Coles","Phil Collins","Colonia")), $suggestions);
+        $this->assertContains("Coldplay", $suggestions);
+        $this->assertContains("J. Cole", $suggestions);
         $this->assertCount($expected_count, json_decode($suggestions));
     }
 
