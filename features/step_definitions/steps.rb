@@ -23,6 +23,6 @@ When(/^I click "(.*?)"$/) do |button_name|
 end
 
 When(/^I hit the 'Enter' key in the "(.*?)" text box$/) do |text_box|
-  fill_in text_box, with: "\n"
+  fill_in text_box, with: '\n'
 end
 
