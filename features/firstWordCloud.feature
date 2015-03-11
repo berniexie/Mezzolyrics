@@ -41,9 +41,9 @@ Scenario: Enter more text into text box (Adele)
 	
 Scenario: 'Add to Cloud' with selected artist
 	Given that a word cloud has already been generated
-		And a valid artist has been selected
-	When the user clicks the 'Add to Cloud' button
-	Then a new word cloud is generated with both the previous and the new artist 
+		And I fill in "Enter an artist" with "Adele"
+	When I click "Add to Cloud"
+	Then I should see a new word cloud with both the previous and the new artist 
 	
 Scenario: 'Add to Cloud' with empty text box
 	Given that a word cloud has already been generated
@@ -53,10 +53,10 @@ Scenario: 'Add to Cloud' with empty text box
 
 Scenario: Share to Facebook
 	Given that a word cloud has already been generated
-	When the user clicks the 'Share' button
-	Then the application should open a new window that prompts the user for their Facebook information
+	When I click "Share"
+	Then the application should open a new window that prompts me for my Facebook information
 	
 Scenario: Word is clicked in Word Cloud
 		Given that a word cloud has already been generated 
-		When the user clicks on a word in the word cloud
-		Then the display should change to the Song List page for that word
+		When I click on a word in the word cloud
+		Then I should see the Song List page for that word
